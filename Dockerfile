@@ -1,7 +1,3 @@
-# Use phusion/baseimage as base image. To make your builds reproducible, make
-# sure you lock down to a specific version, not to `latest`!
-# See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
-# a list of version numbers.
 FROM microsoft/dotnet:2.2-sdk
 
 # Use baseimage-docker's init system.
@@ -9,6 +5,7 @@ CMD ["/sbin/my_init"]
 
 ARG NEO_COMMIT=13773f78ae7f7ccc78ae0aca1c7ff2f86a499f40
 ARG NEO_PLUGINS_COMMIT=10a348b94374e5ae92c5b2204ff908753b2273dd
+ARG NEO_CHAIN_ID=00746E41
 
 ####### INSTALL NEO #######
 
@@ -44,6 +41,9 @@ RUN mkdir ./Plugins
 RUN mkdir ./Plugins/ApplicationLogs
 RUN cp -r /neo-plugins/ApplicationLogs/bin/release/netstandard2.0/linux-x64/* ./Plugins/
 
+RUN ln -s /neo-cli/neo-cli/ApplicationLogs_${NEO_CHAIN_ID} /applogs
+RUN ln -s /neo-cli/neo-cli/Chain_${NEO_CHAIN_ID} /chain
+
 ####### RUN NEO-CLI #######
 
 WORKDIR /neo-cli/neo-cli
@@ -60,7 +60,7 @@ EXPOSE 30331-30334
 
 # FINAL: NEO runs here
 
-ENTRYPOINT [ "screen", "-L", "-S", "neo", "dotnet", "bin/Release/netcoreapp2.0/linux-x64/neo-cli.dll", "--log", "--rpc" ]
+ENTRYPOINT [ "screen", "-L", "-S", "neo", "dotnet", "./bin/Release/netcoreapp2.0/linux-x64/neo-cli.dll", "--log", "--rpc" ]
 # screen -S neo dotnet bin/Release/netcoreapp2.0/linux-x64/neo-cli.dll --log --rpc
 
 # Clean up APT when done.
