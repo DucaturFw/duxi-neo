@@ -32,12 +32,6 @@ RUN dotnet publish -c release -r linux-x64
 
 WORKDIR /neo-cli/neo-cli
 
-RUN ls -la
-RUN ls -la bin
-RUN ls -la bin/Release
-RUN ls -la bin/Release/netcoreapp2.0/
-RUN ls -la bin/Release/netcoreapp2.0/linux-x64
-
 # 5. install screen (we need it to run neo-cli as a daemon)
 RUN apt-get -y install screen
 # `screen` inside docker won't work without discarding terminal session
