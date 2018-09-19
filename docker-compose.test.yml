@@ -14,5 +14,4 @@ services:
     depends_on:
       - rethink # add rethink as launch dependency for explorer
     environment:
-      NEO_EXPLORER_DB_NAME: test
       NEO_EXPLORER_RETHINK: rethink

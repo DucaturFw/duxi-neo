@@ -27,5 +27,5 @@ services:
     image: neo-xplr
     environment:
       NEO_EXPLORER_NEO_NODE: http://neo-node:10332
-      NEO_EXPLORER_DB_NAME: neo-blocks
+      NEO_EXPLORER_DB_NAME: duxi_neo
       NEO_EXPLORER_RETHINK: ${NEO_EXPLORER_RETHINK}
