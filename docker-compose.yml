@@ -1,0 +1,33 @@
+version: '3'
+volumes:
+  neo-applogs:
+  neo-chain:
+
+services:
+  rethink:
+    image: rethinkdb
+    expose:
+      - 28015 # expose port for other services
+    ports:
+      - 8734:8080 # expose http frontend port to host system for debugging purposes
+  neo-node:
+    build: .
+    image: neo-node
+    expose:
+      - 10332 # expose port for other services
+    ports:
+      - 10332:10332 # expose port to host system for debugging and helath check purposes
+    tty: true # needed for screen (neo-cli doesn't work otherwise)
+    volumes:
+      - neo-applogs:/applogs
+      - neo-chain:/chain
+  neo-xplr:
+    depends_on:
+      - rethink
+      - neo-node
+    build: ../neo-blockchain-explorer
+    image: neo-xplr
+    environment:
+      NEO_EXPLORER_NEO_NODE: http://neo-node:10332
+      NEO_EXPLORER_DB_NAME: test
+      NEO_EXPLORER_RETHINK: rethink
