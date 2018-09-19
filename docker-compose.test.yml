@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  # RethinkDB for test data
+  rethink:
+    image: rethinkdb
+    expose:
+      - 28015 # expose port for other services
+    ports:
+      - 8734:8080 # expose http frontend port to host system for debugging purposes
+  
+  neo-xplr:
+    depends_on:
+      - rethink # add rethink as launch dependency for explorer
+    environment:
+      NEO_EXPLORER_DB_NAME: test
+      NEO_EXPLORER_RETHINK: rethink
