@@ -23,7 +23,7 @@ services:
   neo-xplr:
     depends_on:
       - neo-node
-    build: ../neo-blockchain-explorer
+    build: ./neo-blockchain-explorer
     image: neo-xplr
     environment:
       NEO_EXPLORER_NEO_NODE: http://neo-node:10332
