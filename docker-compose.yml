@@ -29,3 +29,8 @@ services:
       NEO_EXPLORER_NEO_NODE: http://neo-node:10332
       NEO_EXPLORER_DB_NAME: duxi_neo
       NEO_EXPLORER_RETHINK: ${NEO_EXPLORER_RETHINK}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
